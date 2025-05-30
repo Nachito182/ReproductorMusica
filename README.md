@@ -1,7 +1,8 @@
 # 🎶 Radiohead Music Player
 
-Este es un reproductor de música basado en los álbumes de **Radiohead**, donde puedes seleccionar un álbum y escuchar sus canciones con una interfaz personalizada.
-Link de Prueba: https://nachito182.github.io/ReproductorMusica/
+Este es un reproductor de música basado en los álbumes de **Radiohead**, donde puedes seleccionar un álbum y escuchar sus canciones con una interfaz personalizada.<br>
+Link de Prueba:<br>
+ https://nachito182.github.io/ReproductorMusica/
 
 ## 🚀 Características
 
