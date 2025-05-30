@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", () => {
+    updateAlbumStyle();
+});
+
 const albumSongs = {
     "paho" : [
         { title: "You", duration: "3:28", file: "songs/paho/01.mp3" },
@@ -130,6 +134,62 @@ function getAlbumIdFromURL() {
     return params.get("album");
 }
 
+const albumStyles = {
+    "paho": {
+        cover: "covers/paho.jpg",
+        title: "Pablo Honey",
+        year: 1993,
+        color: "#FF5733"
+    },
+    "thbe": {
+        cover: "covers/thbe.jpg",
+        title: "The Bends",
+        year: 1995,
+        color: "#F4A261"
+    },
+    "okco": {
+        cover: "covers/okco.jpg",
+        title: "OK Computer",
+        year: 1997,
+        color: "#264653"
+    },
+    "kida": {
+        cover: "covers/kida.jpg",
+        title: "Kid A",
+        year: 2000,
+        color: "#2A9D8F"
+    },
+    "amn": {
+        cover: "covers/amn.jpg",
+        title: "Amnesiac",
+        year: 2001,
+        color: "#E76F51"
+    },
+    "httt": {
+        cover: "covers/httt.jpg",
+        title: "Hail to the Thief",
+        year: 2003,
+        color: "#8A6E3B"
+    },
+    "inra": {
+        cover: "covers/inra.png",
+        title: "In Rainbows",
+        year: 2007,
+        color: "#E63946"
+    },
+    "tkol": {
+        cover: "covers/tkol.jpg",
+        title: "The King of Limbs",
+        year: 2011,
+        color: "#3A5A40"
+    },
+    "amsp": {
+        cover: "covers/amsp.jpg",
+        title: "A Moon Shaped Pool",
+        year: 2016,
+        color: "#546A76"
+    }
+};
 
 let currentIndex = 0;
 let isPlaying = false;
@@ -142,6 +202,19 @@ const progressContainer = document.querySelector(".progress-container");
 const currentTimeSpan = document.getElementById("current-time");
 const durationSpan = document.getElementById("duration");
 const currentTitle = document.getElementById("current-title");
+
+function updateAlbumStyle() {
+    const albumId = getAlbumIdFromURL();
+    const albumData = albumStyles[albumId];
+
+    if (albumData) {
+        document.querySelector(".album-cover img").src = albumData.cover;
+        document.querySelector(".album-meta h2").textContent = albumData.title;
+        document.querySelector(".album-meta p:first-of-type").textContent = albumData.year;
+        document.title = `${albumData.title} - Reproductor`;
+
+    }
+}
 
 
 function loadSongs() {
