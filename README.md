@@ -14,13 +14,13 @@ Este es un reproductor de música basado en los álbumes de **Radiohead**, donde
 ## 📂 Estructura de Archivos
 
 📁 ReproductorMusica/ <br>
-├── 📁 covers/  (Imágenes de los álbumes) 
-├── 📁 music/  (Archivos MP3 organizados por álbum) 
-├── 📄 index.html  (Menú de selección de álbumes) 
-├── 📄 reproductor.html  (Interfaz del reproductor) 
-├── 📄 style.css  (Estilos del reproductor) 
-├── 📄 script.js  (Lógica de reproducción y configuración) 
-├── 📄 README.md  (Este archivo)
+├── 📁 covers/  (Imágenes de los álbumes) <br>
+├── 📁 music/  (Archivos MP3 organizados por álbum) <br>
+├── 📄 index.html  (Menú de selección de álbumes) <br>
+├── 📄 reproductor.html  (Interfaz del reproductor) <br>
+├── 📄 style.css  (Estilos del reproductor) <br>
+├── 📄 script.js  (Lógica de reproducción y configuración) <br>
+├── 📄 README.md  (Este archivo) <br>
 
 
 ## 🛠️ Instalación
