@@ -1,48 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <title>In Rainbows - Reproductor</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Radiohead - Álbumes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #121212;
+      color: #eee;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 80px;
+      margin-top: 5%;
+      font-size: 50px;
+    }
+    #album-menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 0px 15%;
+    }
+    .album-item {
+      cursor: pointer;
+      width: 180px;
+      border-radius: 10px;
+      background: #1e1e1e;
+      padding: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .album-item:hover {
+      transform: scale(1.05);
+    }
+    .album-item img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .album-title {
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .album-year {
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="album-info">
-            <div class="album-cover"><img src="cover.png" style="height: 100%;"></div>
-            <div class="album-meta">
-                <h2>IN RAINBOWS</h2>
-                <p>2007</p>
-                <p>Radiohead</p>
-            </div>
-        </div>
+  <h1>RADIOHEAD</h1>
+  <div id="album-menu"></div>
 
-        <div class="song-list" id="song-list">
-            <!-- Canciones desde JS -->
-        </div>
-    </div>
+  <script>
+    const albums = [
+      { id: "paho", title: "Pablo Honey", year: 1993, cover: "covers/paho.jpg" },
+      { id: "thbe", title: "The Bends", year: 1995, cover: "covers/thbe.jpg" },
+      { id: "okco", title: "OK Computer", year: 1997, cover: "covers/okco.jpg" },
+      { id: "kida", title: "Kid A", year: 2000, cover: "covers/kida.jpg" },
+      { id: "amn", title: "Amnesiac", year: 2001, cover: "covers/amn.jpg" },
+      { id: "httt", title: "Hail to the Thief", year: 2003, cover: "covers/httt.jpg" },
+      { id: "inra", title: "In Rainbows", year: 2007, cover: "covers/inra.png" },
+      { id: "tkol", title: "The King of Limbs", year: 2011, cover: "covers/tkol.jpg" },
+      { id: "amsp", title: "A Moon Shaped Pool", year: 2016, cover: "covers/amsp.jpg" }
+    ];
 
-    <div class="player-controls">
-        <div style="text-align:center; margin-bottom: 5px;" id="current-title">Canción actual</div>
+    const albumMenu = document.getElementById("album-menu");
 
-        <div class="progress-container">
-            <span id="current-time">0:00</span>
-            <div class="progress">
-                <div class="progress-bar"></div>
-            </div>
-            <span id="duration">0:00</span>
-        </div>
+    albums.forEach(album => {
+      const div = document.createElement("div");
+      div.className = "album-item";
+      div.innerHTML = `
+        <img src="${album.cover}" alt="${album.title}">
+        <div class="album-title">${album.title}</div>
+        <div class="album-year">${album.year}</div>
+      `;
+      div.onclick = () => {
+        window.location.href = `reproductor.html?album=${album.id}`;
+      };
+      albumMenu.appendChild(div);
+    });
+  </script>
 
-        <div class="controls">
-            <button id="repeat"><i class="bi bi-arrow-repeat"></i></button>
-            <button id="prev"><i class="bi bi-skip-backward-fill"></i></button>
-            <button id="play"><i class="bi bi-play-fill"></i></button>
-            <button id="next"><i class="bi bi-skip-forward-fill"></i></button>
-            <button id="shuffle"><i class="bi bi-shuffle"></i></button>
-          </div>        
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
