@@ -42,6 +42,7 @@ function loadAndPlaySong() {
     audio.play();
     isPlaying = true;
     updateSongDisplay();
+    updatePlayIcon();
 }
 
 function getFileName(path) {
@@ -49,15 +50,27 @@ function getFileName(path) {
 }
 
 function playSong() {
-    const currentFile = getFileName(songs[currentIndex].file);
-    const audioFileName = getFileName(audio.src);
-    
+    const currentFile = songs[currentIndex].file;
+    const audioFileName = audio.src.split("/").pop();
+
     if (!audio.src || audioFileName !== currentFile) {
         loadAndPlaySong();
     } else if (!isPlaying) {
         audio.play();
         isPlaying = true;
+        updatePlayIcon();
         updateSongDisplay();
+    }
+}
+
+function updatePlayIcon() {
+    const playButtonIcon = document.querySelector("#play i");
+    if (isPlaying) {
+        playButtonIcon.classList.remove("bi-play-fill");
+        playButtonIcon.classList.add("bi-pause-fill");
+    } else {
+        playButtonIcon.classList.remove("bi-pause-fill");
+        playButtonIcon.classList.add("bi-play-fill");
     }
 }
 
@@ -69,6 +82,7 @@ audio.onended = () => {
 function pauseSong() {
     audio.pause();
     isPlaying = false;
+    updatePlayIcon();
 }
 
 function updateSongDisplay() {
@@ -142,4 +156,5 @@ document.getElementById("repeat").onclick = () => {
 };
 
 loadSongs();
+
 
