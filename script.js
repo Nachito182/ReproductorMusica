@@ -18,8 +18,11 @@ let isShuffled = false;
 const audio = new Audio();
 const songListContainer = document.getElementById("song-list");
 const progressBar = document.querySelector(".progress-bar");
+const progressContainer = document.querySelector(".progress-container");
 const currentTimeSpan = document.getElementById("current-time");
 const durationSpan = document.getElementById("duration");
+const currentTitle = document.getElementById("current-title");
+
 
 function loadSongs() {
     songs.forEach((song, index) => {
@@ -28,44 +31,70 @@ function loadSongs() {
         songDiv.innerHTML = `<span>${song.title}</span><span>${song.duration}</span>`;
         songDiv.onclick = () => {
             currentIndex = index;
-            playSong();
+            loadAndPlaySong();
         };
         songListContainer.appendChild(songDiv);
     });
 }
 
-function playSong() {
+function loadAndPlaySong() {
     audio.src = songs[currentIndex].file;
     audio.play();
     isPlaying = true;
-    updatePlayingState();
+    updateSongDisplay();
 }
+
+function getFileName(path) {
+    return path.split("/").pop();
+}
+
+function playSong() {
+    const currentFile = getFileName(songs[currentIndex].file);
+    const audioFileName = getFileName(audio.src);
+    
+    if (!audio.src || audioFileName !== currentFile) {
+        loadAndPlaySong();
+    } else if (!isPlaying) {
+        audio.play();
+        isPlaying = true;
+        updateSongDisplay();
+    }
+}
+
+// Evento para pasar a la siguiente canción al terminar la actual
+audio.onended = () => {
+    nextSong();
+};
 
 function pauseSong() {
     audio.pause();
     isPlaying = false;
-    updatePlayingState();
 }
 
-function updatePlayingState() {
+function updateSongDisplay() {
     const allSongs = document.querySelectorAll(".song");
     allSongs.forEach((el, i) => {
         el.classList.toggle("playing", i === currentIndex);
     });
+    currentTitle.textContent = songs[currentIndex].title;
 }
 
 function nextSong() {
     if (isShuffled) {
-        currentIndex = Math.floor(Math.random() * songs.length);
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * songs.length);
+        } while (newIndex === currentIndex);
+        currentIndex = newIndex;
     } else {
         currentIndex = (currentIndex + 1) % songs.length;
     }
-    playSong();
+    loadAndPlaySong();
 }
 
 function prevSong() {
     currentIndex = (currentIndex - 1 + songs.length) % songs.length;
-    playSong();
+    loadAndPlaySong();
 }
 
 function toggleShuffle() {
@@ -73,6 +102,7 @@ function toggleShuffle() {
     alert("Modo aleatorio: " + (isShuffled ? "activado" : "desactivado"));
 }
 
+// Actualiza barra de progreso
 audio.ontimeupdate = () => {
     const progressPercent = (audio.currentTime / audio.duration) * 100;
     progressBar.style.width = progressPercent + "%";
@@ -87,10 +117,29 @@ function formatTime(time) {
     return `${min}:${sec}`;
 }
 
-document.getElementById("play").onclick = () => isPlaying ? pauseSong() : playSong();
+// Hacer clic en la barra para saltar a un tiempo
+progressContainer.addEventListener("click", (e) => {
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+
+    audio.currentTime = (clickX / width) * duration;
+});
+
+document.getElementById("play").onclick = () => {
+    if (isPlaying) {
+        pauseSong();
+    } else {
+        playSong();
+    }
+};
 document.getElementById("next").onclick = nextSong;
 document.getElementById("prev").onclick = prevSong;
 document.getElementById("shuffle").onclick = toggleShuffle;
-document.getElementById("repeat").onclick = () => playSong();
+document.getElementById("repeat").onclick = () => {
+    audio.currentTime = 0;
+    playSong();
+};
 
 loadSongs();
+
