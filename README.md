@@ -13,7 +13,7 @@ Este es un reproductor de música basado en los álbumes de **Radiohead**, donde
 
 ## 📂 Estructura de Archivos
 
-📁 ReproductorMusica/ 
+📁 ReproductorMusica/ <br>
 ├── 📁 covers/  (Imágenes de los álbumes) 
 ├── 📁 music/  (Archivos MP3 organizados por álbum) 
 ├── 📄 index.html  (Menú de selección de álbumes) 
